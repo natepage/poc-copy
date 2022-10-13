@@ -1,8 +1,6 @@
 name: 'Copy to Remote'
 on:
   workflow_dispatch:
-    branches:
-      - main
     inputs:
       sprint_name:
         description: 'Sprint Name'
