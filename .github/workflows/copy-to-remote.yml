@@ -13,6 +13,13 @@ jobs:
       - run: echo $(pwd)
       - run: ls -la
 
+      - run: |
+          cd ..
+          ls -la
+          git clone $REMOTE_REPO remote
+          cd remote
+          ls -la
+
 #      - run: 'git fetch --prune --unshallow'
 #
 #      - name: 'Remove Git Extra Header'
