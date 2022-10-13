@@ -1,8 +1,7 @@
 name: 'Copy to Remote'
 on:
-    push:
-        branches:
-            - main
+    workflow_dispatch:
+
 jobs:
     copy_to_remote:
         runs-on: ubuntu-latest
