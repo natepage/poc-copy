@@ -33,7 +33,7 @@ jobs:
           echo ''
           echo 'Remove git context and copy files from github workspace to remote repo'
           rm -rf "$GITHUB_WORKSPACE/.git"
-          cp -r "$GITHUB_WORKSPACE/*" "$GITHUB_WORKSPACE/../remote/"
+          cp -r $GITHUB_WORKSPACE/* $GITHUB_WORKSPACE/../remote/
           
           echo ''
           echo 'Add, commit, and push changes to remote repo'
