@@ -9,14 +9,14 @@ jobs:
       GITHUB_ORG: 'natepage'
       GITHUB_USERNAME: 'natepage'
       GITHUB_TOKEN: '${{ secrets.COPY_TO_REMOTE_GITHUB_TOKEN }}'
-      REMOTE_REPO: 'poc-copy-remote'
+      GITHUB_REMOTE_REPO: 'poc-copy-remote'
     steps:
       - uses: eonx-com/actions-checkout@v2
 
       - name: 'Copy files to remote repo'
         run: |          
           echo 'Clone remote repo and remove all files but .git folder'
-          git clone https://github.com/$GITHUB_ORG/$GITHUB_REPO.git $GITHUB_WORKSPACE/../remote
+          git clone https://github.com/$GITHUB_ORG/$GITHUB_REMOTE_REPO.git $GITHUB_WORKSPACE/../remote
           find $GITHUB_WORKSPACE/../remote/ -type f -not -name '.git*' -delete
           
           echo ''
