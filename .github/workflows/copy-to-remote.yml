@@ -10,16 +10,21 @@ jobs:
     steps:
       - uses: eonx-com/actions-checkout@v2
 
-      - run: echo $(pwd)
-      - run: ls -la
-
       - name: 'Copy files to remote repo'
-        run: |
-          cd ..
-          git clone $REMOTE_REPO remote
-          cd remote && touch test.txt && ls -la && cd ..
-          find ./remote/ -type f -not -name '.git*' -delete
-          cd remote && ls -la
+        run: |          
+          # Clone remote repo and remove all files but .git folder
+          git clone $REMOTE_REPO $GITHUB_WORKSPACE/../remote
+          find $GITHUB_WORKSPACE/../remote/ -type f -not -name '.git*' -delete
+          
+          # Remove git context and copy files from github workspace to remote repo
+          rm -rf $GITHUB_WORKSPACE/.git
+          cp -r $GITHUB_WORKSPACE/* $GITHUB_WORKSPACE/remote/
+          
+          # Add, commit, and push changes to remote repo
+          cd $GITHUB_WORKSPACE/../remote
+          git add .
+          git commit -m 'Copy files to remote'
+          git push
 
 #      - run: 'git fetch --prune --unshallow'
 #
