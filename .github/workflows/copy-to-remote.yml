@@ -6,17 +6,17 @@ jobs:
   copy_to_remote:
     runs-on: ubuntu-latest
     env:
-      REMOTE_REPO: 'https://github.com/natepage/poc-copy-remote.git'
+      GITHUB_ORG: 'natepage'
+      GITHUB_USERNAME: 'natepage'
+      GITHUB_TOKEN: '${{ secrets.COPY_TO_REMOTE_GITHUB_TOKEN }}'
+      REMOTE_REPO: 'poc-copy-remote'
     steps:
       - uses: eonx-com/actions-checkout@v2
-
-      - name: 'Remove Git Extra Header'
-        run: 'git config -l | grep ''http\..*\.extraheader'' | cut -d= -f1 | xargs -L1 git config --unset-all'
 
       - name: 'Copy files to remote repo'
         run: |          
           echo 'Clone remote repo and remove all files but .git folder'
-          git clone $REMOTE_REPO $GITHUB_WORKSPACE/../remote
+          git clone https://github.com/$GITHUB_ORG/$GITHUB_REPO.git $GITHUB_WORKSPACE/../remote
           find $GITHUB_WORKSPACE/../remote/ -type f -not -name '.git*' -delete
           
           echo ''
@@ -27,12 +27,10 @@ jobs:
           echo ''
           echo 'Add, commit, and push changes to remote repo'
           cd $GITHUB_WORKSPACE/../remote/
-          git init
           git add .
           git commit -m 'Copy files to remote'
-          git branch -M main
-          git remote add origin $REMOTE_REPO
-          git push -u origin main
+          git remote add copy-remote https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_ORG/$GITHUB_REPO.git
+          git push copy-remote main
 
 #      - run: 'git fetch --prune --unshallow'
 #
