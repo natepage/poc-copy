@@ -10,7 +10,7 @@ jobs:
     steps:
         - uses: eonx-com/actions-checkout@v2
 
-        - run: { echo $(pwd); }
+        - run: echo $(pwd);
 
 #      - run: 'git fetch --prune --unshallow'
 #
