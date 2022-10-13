@@ -27,10 +27,12 @@ jobs:
           echo ''
           echo 'Add, commit, and push changes to remote repo'
           cd $GITHUB_WORKSPACE/../remote/
-          ls -la .git
+          git init
           git add .
           git commit -m 'Copy files to remote'
-          git push
+          git branch -M main
+          git remote add origin $REMOTE_REPO
+          git push -u origin main
 
 #      - run: 'git fetch --prune --unshallow'
 #
