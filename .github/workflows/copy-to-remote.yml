@@ -1,16 +1,16 @@
 name: 'Copy to Remote'
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
-    copy_to_remote:
-        runs-on: ubuntu-latest
-    env:
-        REMOTE_REPO: 'https://github.com/natepage/poc-copy-remote.git'
-    steps:
-        - uses: eonx-com/actions-checkout@v2
+  copy_to_remote:
+    runs-on: ubuntu-latest
+  env:
+    REMOTE_REPO: 'https://github.com/natepage/poc-copy-remote.git'
+  steps:
+    - uses: eonx-com/actions-checkout@v2
 
-        - run: echo $(pwd);
+    - run: echo $(pwd);
 
 #      - run: 'git fetch --prune --unshallow'
 #
