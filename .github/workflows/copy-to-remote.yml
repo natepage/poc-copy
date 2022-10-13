@@ -16,13 +16,15 @@ jobs:
           git clone $REMOTE_REPO $GITHUB_WORKSPACE/../remote
           find $GITHUB_WORKSPACE/../remote/ -type f -not -name '.git*' -delete
           
+          echo ''
           echo 'Remove git context and copy files from github workspace to remote repo'
           rm -rf $GITHUB_WORKSPACE/.git
           cp -r $GITHUB_WORKSPACE/* $GITHUB_WORKSPACE/../remote/
           
+          echo ''
           echo 'Add, commit, and push changes to remote repo'
           cd $GITHUB_WORKSPACE/../remote/
-          ls -la
+          ls -la .git
           git add .
           git commit -m 'Copy files to remote'
           git push
