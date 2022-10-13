@@ -23,7 +23,7 @@ jobs:
           git config --global user.email "$GITHUB_EMAIL"
           git config --global user.name "$GITHUB_USERNAME"
           
-          GITHUB_FULL_REMOTE_REPO=https://$GITHUB_USERNAME:$GITHUB_TOKENgithub.com/$GITHUB_ORG/$GITHUB_REMOTE_REPO.git
+          GITHUB_FULL_REMOTE_REPO=https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_ORG/$GITHUB_REMOTE_REPO.git
           
           echo 'Clone remote repo and remove all files but .git folder'
           git clone --single-branch --depth 1 --branch "$GITHUB_TARGET_BRANCH" "$GITHUB_FULL_REMOTE_REPO" "$GITHUB_WORKSPACE/../remote"
