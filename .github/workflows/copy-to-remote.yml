@@ -45,5 +45,5 @@ jobs:
           # Add, commit, and push changes to remote repo
           cd "$GITHUB_WORKSPACE/../remote/"
           git add .
-          git commit -m '${{ inputs.sprint_name }} '
+          git commit -m '${{ inputs.sprint_name }}'
           git push "$GITHUB_FULL_REMOTE_REPO" --set-upstream "$GITHUB_TARGET_BRANCH"
