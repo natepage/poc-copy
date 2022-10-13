@@ -1,0 +1,51 @@
+name: 'Copy to Remote'
+on:
+    push:
+        branches:
+            - main
+jobs:
+    copy_to_remote:
+        runs-on: ubuntu-latest
+    env:
+        REMOTE_REPO: 'https://github.com/natepage/poc-copy-remote.git'
+    steps:
+        - uses: eonx-com/actions-checkout@v2
+
+        - run: { echo $(pwd); }
+
+#      - run: 'git fetch --prune --unshallow'
+#
+#      - name: 'Remove Git Extra Header'
+#        run: 'git config -l | grep ''http\..*\.extraheader'' | cut -d= -f1 | xargs -L1 git config --unset-all'
+#
+#      - name: 'Resolve current branch'
+#        id: branch_name
+#        run: 'echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"'
+#
+#      - name: 'Add Repo Remote'
+#        run: 'git remote add split-remote https://natepage:${{ secrets.MONOREPO_GITHUB_TOKEN }}@github.com/eonx-com/${{ matrix.mapping.repo }}.git'
+#
+#      - name: 'Split packages/${{ matrix.mapping.dir }}'
+#        env:
+#          BRANCH: '${{ steps.branch_name.outputs.branch }}'
+#        run: |
+#          git checkout -b "local-$BRANCH-checkout" "$BRANCH"
+#          git subtree split --prefix="packages/${{ matrix.mapping.dir }}" --branch="local-$BRANCH" "$BRANCH"
+#          git push --force split-remote local-$BRANCH:$BRANCH
+#
+#      - if: 'contains(github.event.head_commit.message, ''[Release]'')'
+#        name: 'Release eonx-com/${{ matrix.mapping.repo }}:${{ matrix.tag }}'
+#        shell: bash
+#        run: |
+#          if git rev-parse "$TAG" >/dev/null 2>&1; then
+#              git checkout -b "local-$TAG-checkout" "tags/$TAG"
+#
+#              if [ -d "$DIR" ]; then
+#                  git subtree split --prefix="$DIR" --branch="local-$TAG" "$TAG"
+#                  git push --force split-remote local-$TAG:refs/tags/$TAG
+#              else
+#                  echo "Dir \"$DIR\" does not exist for tag \"$TAG\""
+#              fi
+#          else
+#              echo "Tag \"$TAG\" does not exist, skip"
+#          fi
