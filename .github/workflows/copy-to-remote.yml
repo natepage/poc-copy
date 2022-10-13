@@ -40,39 +40,3 @@ jobs:
           git add .
           git commit -m 'Copy files to remote'
           git push "$GITHUB_FULL_REMOTE_REPO" --set-upstream "$GITHUB_TARGET_BRANCH"
-
-#      - run: 'git fetch --prune --unshallow'
-#
-#
-#
-#      - name: 'Resolve current branch'
-#        id: branch_name
-#        run: 'echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"'
-#
-#      - name: 'Add Repo Remote'
-#        run: 'git remote add split-remote https://natepage:${{ secrets.MONOREPO_GITHUB_TOKEN }}@github.com/eonx-com/${{ matrix.mapping.repo }}.git'
-#
-#      - name: 'Split packages/${{ matrix.mapping.dir }}'
-#        env:
-#          BRANCH: '${{ steps.branch_name.outputs.branch }}'
-#        run: |
-#          git checkout -b "local-$BRANCH-checkout" "$BRANCH"
-#          git subtree split --prefix="packages/${{ matrix.mapping.dir }}" --branch="local-$BRANCH" "$BRANCH"
-#          git push --force split-remote local-$BRANCH:$BRANCH
-#
-#      - if: 'contains(github.event.head_commit.message, ''[Release]'')'
-#        name: 'Release eonx-com/${{ matrix.mapping.repo }}:${{ matrix.tag }}'
-#        shell: bash
-#        run: |
-#          if git rev-parse "$TAG" >/dev/null 2>&1; then
-#              git checkout -b "local-$TAG-checkout" "tags/$TAG"
-#
-#              if [ -d "$DIR" ]; then
-#                  git subtree split --prefix="$DIR" --branch="local-$TAG" "$TAG"
-#                  git push --force split-remote local-$TAG:refs/tags/$TAG
-#              else
-#                  echo "Dir \"$DIR\" does not exist for tag \"$TAG\""
-#              fi
-#          else
-#              echo "Tag \"$TAG\" does not exist, skip"
-#          fi
