@@ -12,15 +12,15 @@ jobs:
 
       - name: 'Copy files to remote repo'
         run: |          
-          # Clone remote repo and remove all files but .git folder
+          echo 'Clone remote repo and remove all files but .git folder'
           git clone $REMOTE_REPO $GITHUB_WORKSPACE/../remote
           find $GITHUB_WORKSPACE/../remote/ -type f -not -name '.git*' -delete
           
-          # Remove git context and copy files from github workspace to remote repo
+          echo 'Remove git context and copy files from github workspace to remote repo'
           rm -rf $GITHUB_WORKSPACE/.git
           cp -r $GITHUB_WORKSPACE/* $GITHUB_WORKSPACE/../remote/
           
-          # Add, commit, and push changes to remote repo
+          echo 'Add, commit, and push changes to remote repo'
           cd $GITHUB_WORKSPACE/../remote/
           ls -la
           git add .
