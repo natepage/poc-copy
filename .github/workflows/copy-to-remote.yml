@@ -27,7 +27,7 @@ jobs:
           
           echo 'Clone remote repo and remove all files but .git folder'
           git clone --single-branch --depth 1 --branch "$GITHUB_TARGET_BRANCH" "$GITHUB_FULL_REMOTE_REPO" "$GITHUB_WORKSPACE/../remote"
-          find $GITHUB_WORKSPACE/../remote/ -type f -not -name '.git*' -delete
+          #find $GITHUB_WORKSPACE/../remote/ -type f -not -name '.git*' -delete
           
           echo ''
           echo 'Remove git context and copy files from github workspace to remote repo'
