@@ -37,6 +37,7 @@ jobs:
           echo ''
           echo 'Add, commit, and push changes to remote repo'
           cd $GITHUB_WORKSPACE/../remote/
+          git init
           git add .
           git commit -m 'Copy files to remote'
           git remote add copy-remote https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_ORG/$GITHUB_REPO.git
