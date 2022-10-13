@@ -8,7 +8,9 @@ jobs:
     env:
       GITHUB_ORG: 'natepage'
       GITHUB_USERNAME: 'natepage'
+      GITHUB_EMAIL: 'nathan.page@eonx.com'
       GITHUB_TOKEN: '${{ secrets.COPY_TO_REMOTE_GITHUB_TOKEN }}'
+      GITHUB_TARGET_BRANCH: 'main'
       GITHUB_REMOTE_REPO: 'poc-copy-remote'
     steps:
       - uses: eonx-com/actions-checkout@v2
@@ -17,9 +19,14 @@ jobs:
         run: 'git config -l | grep ''http\..*\.extraheader'' | cut -d= -f1 | xargs -L1 git config --unset-all'
 
       - name: 'Copy files to remote repo'
-        run: |          
+        run: |
+          git config --global user.email "$GITHUB_EMAIL"
+          git config --global user.name "$GITHUB_USERNAME"
+          
+          GITHUB_FULL_REMOTE_REPO=https://$GITHUB_USERNAME:$GITHUB_TOKENgithub.com/$GITHUB_ORG/$GITHUB_REMOTE_REPO.git
+          
           echo 'Clone remote repo and remove all files but .git folder'
-          git clone https://github.com/$GITHUB_ORG/$GITHUB_REMOTE_REPO.git $GITHUB_WORKSPACE/../remote
+          git clone --single-branch --depth 1 --branch "$GITHUB_TARGET_BRANCH" "$GITHUB_FULL_REMOTE_REPO" "$GITHUB_WORKSPACE/../remote"
           find $GITHUB_WORKSPACE/../remote/ -type f -not -name '.git*' -delete
           
           echo ''
@@ -30,11 +37,10 @@ jobs:
           echo ''
           echo 'Add, commit, and push changes to remote repo'
           cd $GITHUB_WORKSPACE/../remote/
-          git init
           git add .
           git commit -m 'Copy files to remote'
           git remote add copy-remote https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_ORG/$GITHUB_REPO.git
-          git push copy-remote main
+          git push "$GITHUB_FULL_REMOTE_REPO" --set-upstream "$GITHUB_TARGET_BRANCH"
 
 #      - run: 'git fetch --prune --unshallow'
 #
