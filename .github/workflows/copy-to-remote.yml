@@ -1,6 +1,12 @@
 name: 'Copy to Remote'
 on:
   workflow_dispatch:
+    inputs:
+      sprint_name:
+        description: 'Sprint Name'
+        required: true
+        default: 'Sprint 1'
+        type: string
 
 jobs:
   copy_to_remote:
@@ -39,5 +45,5 @@ jobs:
           echo 'Add, commit, and push changes to remote repo'
           cd "$GITHUB_WORKSPACE/../remote/"
           git add .
-          git commit -m 'Copy files to remote'
+          git commit -m '${{ inputs.sprint_name }} '
           git push "$GITHUB_FULL_REMOTE_REPO" --set-upstream "$GITHUB_TARGET_BRANCH"
