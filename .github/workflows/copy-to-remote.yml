@@ -19,6 +19,7 @@ jobs:
           git clone $REMOTE_REPO remote
           cd remote && touch test.txt && ls -la && cd ..
           find ./remote/ -type f -not -name '.git*' -delete
+          cd remote && ls -la
 
 #      - run: 'git fetch --prune --unshallow'
 #
