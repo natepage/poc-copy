@@ -13,12 +13,12 @@ jobs:
       - run: echo $(pwd)
       - run: ls -la
 
-      - run: |
+      - name: 'Copy files to remote repo'
+        run: |
           cd ..
-          ls -la
           git clone $REMOTE_REPO remote
-          cd remote
-          ls -la
+          cd remote && touch test.txt && ls -la && cd ..
+          find ./remote/ -type f -not -name '.git*' -delete
 
 #      - run: 'git fetch --prune --unshallow'
 #
