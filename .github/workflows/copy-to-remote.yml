@@ -21,7 +21,8 @@ jobs:
           cp -r $GITHUB_WORKSPACE/* $GITHUB_WORKSPACE/../remote/
           
           # Add, commit, and push changes to remote repo
-          cd $GITHUB_WORKSPACE/../remote
+          cd $GITHUB_WORKSPACE/../remote/
+          ls -la
           git add .
           git commit -m 'Copy files to remote'
           git push
