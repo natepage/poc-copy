@@ -1,6 +1,8 @@
 name: 'Copy to Remote'
 on:
   workflow_dispatch:
+    branches:
+      - main
     inputs:
       sprint_name:
         description: 'Sprint Name'
@@ -31,18 +33,16 @@ jobs:
           
           GITHUB_FULL_REMOTE_REPO=https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_ORG/$GITHUB_REMOTE_REPO.git
           
-          echo 'Clone remote repo and remove all files but .git folder'
+          # Clone remote repo and remove all files but .git folder
           git clone --single-branch --depth 1 --branch "$GITHUB_TARGET_BRANCH" "$GITHUB_FULL_REMOTE_REPO" "$GITHUB_WORKSPACE/../tmp"
           mkdir "$GITHUB_WORKSPACE/../remote"
           mv "$GITHUB_WORKSPACE/../tmp/.git" "$GITHUB_WORKSPACE/../remote/.git"
           
-          echo ''
-          echo 'Remove git context and copy files from github workspace to remote repo'
+          # Remove git context and copy files from github workspace to remote repo
           rm -rf "$GITHUB_WORKSPACE/.git"
           cp -r $GITHUB_WORKSPACE/* $GITHUB_WORKSPACE/../remote/
           
-          echo ''
-          echo 'Add, commit, and push changes to remote repo'
+          # Add, commit, and push changes to remote repo
           cd "$GITHUB_WORKSPACE/../remote/"
           git add .
           git commit -m '${{ inputs.sprint_name }} '
